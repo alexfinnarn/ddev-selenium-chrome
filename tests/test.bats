@@ -29,12 +29,12 @@ teardown() {
   ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
 }
 
-# @test "install from release" {
-#  set -eu -o pipefail
-#  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-#  echo "# ddev get drud/ddev-addon-template with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
-#  ddev get alexfinnarn/ddev-selenium-chrome
-#  ddev restart >/dev/null
-#  # Do something useful here that verifies the add-on
-#  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
-#}
+ @test "install from release" {
+  set -eu -o pipefail
+  cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
+  echo "# ddev get drud/ddev-addon-template with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  ddev get alexfinnarn/ddev-selenium-chrome
+  ddev restart >/dev/null
+  # Do something useful here that verifies the add-on
+  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
+}
