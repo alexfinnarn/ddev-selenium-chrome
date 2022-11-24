@@ -26,7 +26,7 @@ teardown() {
   ddev restart
   # Make sure we get a success message from the status page.
   # For extra credit, use a real CMS with actual config.
-  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
+  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\"" >/dev/null || (echo "# Selenium Grid not ready"  >&3 && exit 1);
 }
 
  @test "install from release" {
@@ -36,5 +36,5 @@ teardown() {
   ddev get alexfinnarn/ddev-selenium-chrome
   ddev restart >/dev/null
   # Make sure we get a success message from the status page.
-  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
+  ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\"" >/dev/null || (echo "# Selenium Grid not ready"  >&3 && exit 1);
 }
