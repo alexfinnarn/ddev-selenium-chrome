@@ -24,7 +24,7 @@ teardown() {
   echo "# ddev get ${DIR} with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get ${DIR}
   ddev restart
-  # Do something here to verify functioning extra service
+  # Make sure we get a success message from the status page.
   # For extra credit, use a real CMS with actual config.
   ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
 }
@@ -32,9 +32,9 @@ teardown() {
  @test "install from release" {
   set -eu -o pipefail
   cd ${TESTDIR} || ( printf "unable to cd to ${TESTDIR}\n" && exit 1 )
-  echo "# ddev get drud/ddev-addon-template with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
+  echo "# ddev get alexfinnarn/ddev-selenium-chrome with project ${PROJNAME} in ${TESTDIR} ($(pwd))" >&3
   ddev get alexfinnarn/ddev-selenium-chrome
   ddev restart >/dev/null
-  # Do something useful here that verifies the add-on
+  # Make sure we get a success message from the status page.
   ddev exec "curl  http://selenium-chrome:4444/status" | grep "\"message\": \"Selenium Grid ready.\""
 }
