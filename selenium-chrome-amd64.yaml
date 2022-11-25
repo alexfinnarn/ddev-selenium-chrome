@@ -1,0 +1,18 @@
+version: '3.6'
+services:
+  chromedriver:
+    container_name: ddev-${DDEV_SITENAME}-chromedriver
+    #image: drupalci/chromedriver:production
+    image: drupalci/chromedriver:dev
+    command: ["--log-path=/tmp/chromedriver.log", "--verbose", "--allowed-ips=", "--allowed-origins=*"]
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - TZ=Europe/London
+
+  web:
+    environment:
+      - SIMPLETEST_BASE_URL=http://ddev-${DDEV_SITENAME}-web
+      - SIMPLETEST_DB=mysql://db:db@db/db
+      - MINK_DRIVER_ARGS_WEBDRIVER=["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://chromedriver:9515"]

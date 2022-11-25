@@ -8,8 +8,11 @@ pre_install_actions:
 - |
   #ddev-nodisplay
   if [ "$(arch)" = "arm64" -o "$(arch)" = "aarch64" ]; then
-    echo "This package does not work on arm64 machines";
-    exit 1;
+    echo "Using arm64 image";
+    cp -f selenium-chrome-arm64.yaml docker-compose.selenium-chrome.yaml
+  else
+    echo "Using amd64 image";
+    cp -f selenium-chrome-amd64.yaml docker-compose.selenium-chrome.yaml
   fi
 
 # - "docker volume rm ddev-${DDEV_PROJECT}_solr 2>/dev/null || true"
