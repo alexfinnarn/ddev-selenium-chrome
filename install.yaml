@@ -6,6 +6,8 @@ name: selenium-chrome
 # DDEV environment variables can be interpolated into these actions
 pre_install_actions:
 - |
+  ls -al .ddev/
+  exit 1;
   #ddev-nodisplay
   if [ "$(arch)" = "arm64" -o "$(arch)" = "aarch64" ]; then
     echo "Using arm64 image";
