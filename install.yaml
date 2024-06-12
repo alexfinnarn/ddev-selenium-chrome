@@ -5,12 +5,7 @@ name: selenium-chrome
 # or doing a sanity check for requirements.
 # DDEV environment variables can be interpolated into these actions
 pre_install_actions:
-- |
-  #ddev-nodisplay
-  if [ "$(arch)" = "arm64" -o "$(arch)" = "aarch64" ]; then
-    echo "This package does not work on arm64 machines";
-    exit 1;
-  fi
+
 
 # - "docker volume rm ddev-${DDEV_PROJECT}_solr 2>/dev/null || true"
 #- |
@@ -50,6 +45,8 @@ pre_install_actions:
 # DDEV environment variables can be interpolated into these filenames
 project_files:
 - docker-compose.selenium-chrome.yaml
+- selenium-chrome-arm64.yaml
+- selenium-chrome-amd64.yaml
 # - extra_files/
 # - somefile.sh
 
@@ -61,9 +58,17 @@ global_files:
 
 # DDEV environment variables can be interpolated into these actions
 post_install_actions:
-# - chmod +x ~/.ddev/commands/web/somecommand
-# - touch somefile.${GOOS}.${DDEV_WEBSERVER}
-# - perl -pi -e 's/oldstring/newstring/g' docker-compose.addon-template.yaml
+  - |
+    #ddev-nodisplay
+    if [ "$(arch)" = "arm64" -o "$(arch)" = "aarch64" ]; then
+      echo "Using arm64 image";
+      cp -f selenium-chrome-arm64.yaml docker-compose.selenium-chrome.yaml;
+      rm -f selenium-chrome-amd64.yaml;
+    else
+      echo "Using amd64 image";
+      cp -f selenium-chrome-amd64.yaml docker-compose.selenium-chrome.yaml;
+      rm -f selenium-chrome-arm64.yaml;
+    fi
 
 # Advanced usage - yaml files can be read in and then used as go template actions
 # in pre_install_actions and post_install_actions
